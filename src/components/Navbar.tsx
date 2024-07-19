@@ -13,16 +13,26 @@ import { ThemeToggle } from "./ThemeToggle";
 import { Loader2 } from "lucide-react";
 import { Logo } from "./Logo";
 
-export default function Header() {
+export default function Navbar() {
   return (
     <header className="py-4">
       <nav className="container flex items-center justify-between">
         <Link href="/">
           <Logo />
         </Link>
-        <Button variant="outline" className="border-orange-400 border" asChild>
-          <Link href="/protected/server">Working papers</Link>
-        </Button>
+
+        <ul className="flex gap-10 text-sm font-medium items-center">
+          <li></li>
+          <li>
+            <Link href="/protected/server">Protected (server)</Link>
+          </li>
+          <li>
+            <Link href="/protected/client">Protected (client)</Link>
+          </li>
+          <li>
+            <Link href="/api/me">Who am I?</Link>
+          </li>
+        </ul>
 
         <div className="flex items-center justify-between gap-6">
           <ThemeToggle />
