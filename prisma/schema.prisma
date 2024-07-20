@@ -14,15 +14,77 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(cuid()) @map("_id")
+  id          String   @id @default(cuid()) @map("_id") @db.String
   email       String   @unique
   username    String?
   firstName   String?
   lastName    String?
   imageUrl    String?
-  isAdmin      Boolean        @default(false)
-  isActive     Boolean        @default(true)
+  isAdmin     Boolean        @default(false)
+  isActive    Boolean        @default(true)
   clerkUserId String   @unique
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  userSettings    UserSettings[]
+  categories      Category[]
+  transactions    Transaction[]
+  monthHistory    MonthHistory[]
+  yearHistory     YearHistory[]
+}
+
+
+model UserSettings {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  currency    String  @unique 
+  user        User @relation(fields: [userId], references: [id])
+  userId      String   @db.String
+}
+
+model Transaction {
+    id            String @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
+    amount        Float
+    description   String  
+    date          DateTime        
+    type          String      @default("income")
+    category      String
+    categoryIcon  String
+    user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId        String @db.String
+
+    
+}
+
+model Category {
+    id         String @id @default(auto()) @map("_id") @db.ObjectId
+    name      String   
+    icon      String   
+    type      String   @default("income")
+    createdAt DateTime @default(now())
+    userId    String   @db.String
+    user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+   
+}
+
+model MonthHistory {
+    id            String @id @default(auto()) @map("_id") @db.ObjectId
+    day           Int
+    month         Int
+    year          Int
+    income        Float
+    expense       Float
+    user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId        String @db.String
+}
+
+model YearHistory {
+    id            String @id @default(auto()) @map("_id") @db.ObjectId
+    month         Int
+    year          Int
+    income        Int
+    expense       Int
+    user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId        String @db.String
 }
