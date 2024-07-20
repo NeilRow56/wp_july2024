@@ -8,9 +8,10 @@ import { buttonVariants } from "./ui/button";
 interface NavbarItemProps {
   label: string;
   href: string;
+  onClick?: () => void;
 }
 
-const NavbarItem = ({ label, href }: NavbarItemProps) => {
+const NavbarItem = ({ label, href, onClick }: NavbarItemProps) => {
   const pathname = usePathname();
   const isActive = pathname === href;
   return (
@@ -25,9 +26,6 @@ const NavbarItem = ({ label, href }: NavbarItemProps) => {
       >
         {label}
       </Link>
-      {isActive && (
-        <div className="absolute -bottom-[2px] left-1/2 hidden h-[2px] w-[80%] -translate-x-1/2 rounded-xl bg-foreground md:block" />
-      )}
     </div>
   );
 };

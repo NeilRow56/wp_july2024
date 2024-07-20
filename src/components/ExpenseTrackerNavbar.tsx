@@ -89,14 +89,14 @@ function MobileNavbar() {
             </div>
             <div className="flex flex-col gap-y-2 pt-4">
               {items.map((item) => (
-                <Button
-                  key={item.href}
-                  variant={item.href === pathname ? "secondary" : "ghost"}
-                  onClick={() => onClick(item.href)}
-                  className="w-full justify-start"
-                >
-                  {item.label}
-                </Button>
+                <NavbarItem
+                  key={item.label}
+                  href={item.href}
+                  label={item.label}
+                  onClick={() => {
+                    setIsOpen((prev) => !prev);
+                  }}
+                />
               ))}
             </div>
             <SheetHeader>
