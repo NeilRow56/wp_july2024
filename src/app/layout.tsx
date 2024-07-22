@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "sonner";
 
 import "./globals.css";
-import { ThemeProvider } from "@/providers/theme-provider";
 
 import Footer from "@/components/Footer";
+import RootProviders from "@/providers/RootProviders";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,16 +27,16 @@ export default function RootLayout({
         className="scroll-smooth antialiased"
         suppressHydrationWarning
       >
-        <body className={`flex min-h-screen flex-col ${inter.className}`}>
-          <ThemeProvider
-            enableSystem
-            attribute="class"
-            defaultTheme="system"
-            disableTransitionOnChange
-          >
-            <main className="grow">{children}</main>
+        <body
+          className={`flex min-h-screen flex-col ${inter.className} ${"theme-orange"}`}
+        >
+          <RootProviders>
+            <main className="grow">
+              <Toaster richColors />
+              {children}
+            </main>
             <Footer />
-          </ThemeProvider>
+          </RootProviders>
         </body>
       </html>
     </ClerkProvider>
